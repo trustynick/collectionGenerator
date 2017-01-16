@@ -20,7 +20,7 @@ function setup() {
 if(debug){
  cols = 3;
  rows = 3;
-  
+
 }
 
   //gen colors
@@ -29,7 +29,9 @@ if(debug){
   }
 
   c = createCanvas((cols + 1) * xSpacer, (rows + 1) * ySpacer);
+  if(debug){
   console.log("w: " + width + "h: " + height);
+  }
   background(255, 253, 250);
 
 
@@ -46,7 +48,9 @@ if(debug){
 
 
       items[a].push(new Item(x, y));
+      if(debug){
       console.log(a + ", " + j);
+      }
       //items[i][j].display();
 
 
@@ -65,7 +69,7 @@ function keyPressed() {
 
 function Item(_x, _y) {
 
-  //for debugging set each item to a single color for easy differntitation 
+  //for debugging set each item to a single color for easy differntitation
   if (debug) {
     var itemColor = color(random(255), random(255), random(255), 255);
     for (i = 0; i < 3; i++) {
@@ -108,74 +112,82 @@ function Item(_x, _y) {
       //feats.push(new name(initAnchors));
     }
 
-    
 
-    
+
+
     for(var f=0;f<4;f++){
-      
-      
+
+
       var test=checkEdges(createVector(feats[z].origin.x, feats[z].origin.y),createVector(_x,_y),margin);
-      
+
       if(test!==4){
       console.log("_____________________________________________test: "+test);
       }
-      
+
     switch(test){
       case 0:
       if(debug){
         fill(255,0,0);
         rect(feats[z].origin.x, feats[z].origin.y,10,10);
-        
-      }  
-      
+
+      }
+
       feats[z].origin.x=_x+xSpacer*margin/2;
+      if(debug){
       console.log("right edge");
+      }
       break;
-      
+
       case 1:
         if(debug){
         fill(255,0,0);
         rect(feats[z].origin.x, feats[z].origin.y,10,10);
-        
-      }  
+
+      }
       feats[z].origin.x=_x-xSpacer*margin/2;
+      if(debug){
       console.log("left edge");
+      }
       break;
-      
+
       case 2:
         if(debug){
         fill(255,0,0);
         rect(feats[z].origin.x, feats[z].origin.y,10,10);
-        
-      }  
+
+      }
      feats[z].origin.y=_y+ySpacer*margin/2;
+      if(debug){
       console.log("bottom edge");
+      }
       break;
-      
+
       case 3:
          if(debug){
         fill(255,0,0);
         rect(feats[z].origin.x, feats[z].origin.y,10,10);
          }
       feats[z].origin.y=_y-ySpacer*margin/2;
+      if(debug){
       console.log("top edge");
+      }
       break;
-      
+
       case 4:
         break;
 
     }
     }
-    
+
     if (debug) {
       fill(0);
       ellipse(feats[z].origin.x, feats[z].origin.y, xSpacer / 45, xSpacer / 45);
 
     }
-    
+
     push();
     translate(feats[z].origin.x, feats[z].origin.y);
-    
+
     //console.log( )
     feats[z].display();
     feats[z].setAnchors();
@@ -357,7 +369,9 @@ function feat3(_a) {
 
   if (this.hasContour) {
     this.countour = new Contour(this.origin.x, this.origin.y, this.size * random(0.1, 2), this.size * random(0.1, 2));
+    if(debug){
     console.log("init contour");
+    }
   }
 
   this.display = function() {
@@ -399,7 +413,7 @@ function feat3(_a) {
 function feat4(_a) {
 
   this.isRotated = Math.random() >= 0.5;
-  
+
   //does the line repeat?
   var repeat = Math.random() >= 0.5;
   //var repeat = false;
@@ -433,14 +447,14 @@ function feat4(_a) {
       rotate(random(360));
       //translate(this.x,this.y)
     }
-    
+
     var waveX = random(xSpacer/10000,xSpacer/1000);
     var reps;
     if (repeat) {
       reps = int(random(2, 6));
-      
+
       var sameWL = Math.random() >= 0.5;
-      
+
     } else {
       reps = 1;
     }
@@ -452,10 +466,10 @@ push(); //translate
     for (var r = 0; r < reps; r++) {
 
 
-      
+
       translate(0, reps * lnOffset);
       beginShape();
-      
+
       if(!sameWL){
         waveX*=random(.5,1.5);
       }
@@ -465,7 +479,7 @@ push(); //translate
         for (var i = 0; i < xSpacer * random(0.1, 3); i++) {
           //2 pixel spacing on the x-axis.
 
-          
+
           var x = i * waveX;
 
 
@@ -549,7 +563,9 @@ function feat5(_a) {
   var aTemp2 = createVector(100, 100);
 
   this.display = function() {
+    if(debug){
     console.log(numVertices + " sided polygon");
+    }
     push();
 
     setColor();
@@ -704,7 +720,6 @@ function cDrawPoly(_x, _y, _h, _w) {
 
 
   endContour();
-  console.log("tri");
   pop();
 }
 
@@ -729,7 +744,6 @@ function cDrawEllipse(_x, _y, _h, _w) {
 
 
   endContour();
-  console.log("tri");
   pop();
 }
 
@@ -767,7 +781,7 @@ function cDrawBurst(_x, _y, _h, _w) {
 function setColor() {
   //var col = int(random(3));
   var col = ColorCounter;
-  
+
   stroke(red(colors[col]), green(colors[col]), blue(colors[col]), random(100, 200));
   fill(red(colors[col]), green(colors[col]), blue(colors[col]), random(100, 200));
   if(ColorCounter<2){
@@ -788,33 +802,38 @@ function Anchors(_a1, _a2) {
 //___________________________check edges_____________________________________________________________
 
 function checkEdges(_a,_b,_m){
-  
-  //console.log()
-  
-  
+
   //right
-  
+
   if(_a.x>_b.x+xSpacer*_m/2){
+    if(debug){
     console.log(_a.x+", "+(_b.x+xSpacer*_m/2));
+    }
     return 0;
   }
   //left
   else if(_a.x<_b.x-xSpacer*_m/2){
+    if(debug){
     console.log(_a.x+", "+(_b.x-xSpacer*_m/2));
+    }
     return 1;
   }
   //bottom
   else if(_a.y>_b.y+ySpacer*_m/2){
+    if(debug){
     console.log(_a.y+", "+(_b.y+ySpacer*_m/2));
+    }
     return 2;
   }
   //top
   else if(_a.y<_b.y-ySpacer*_m/2){
+    if(debug){
     console.log(_a.y+", "+(_b.y-ySpacer*_m/2));
+    }
     return 3;
   }
   else
   return 4
-  
-  
+
+
 }
