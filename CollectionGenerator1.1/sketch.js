@@ -7,7 +7,7 @@ var cols = 10;
 var rows = 10;
 var c;
 var minFeat = 3;
-var maxFeat = 9;
+var maxFeat = 7;
 var margin = 0.5;
 
 var ColorCounter = 0;
@@ -32,7 +32,8 @@ function setup() {
   if (debug) {
     console.log("w: " + width + "h: " + height);
   }
-  background(255, 253, 250);
+  //background(255, 253, 250);
+  background(254, 254, 250);
 
 
   //create item obejcts
@@ -304,6 +305,7 @@ function feat2(_a) {
 
   this.isRotated = Math.random() >= 0.5;
   this.isEqual = Math.random() >= 0.5;
+  this.repeats = Math.random() >= 0.7;
 
   var rn = int(random(_a.anchors.length));
   this.origin = _a.anchors[rn];
@@ -320,11 +322,63 @@ function feat2(_a) {
   //var w = this.origin = _a.anchors[int(random(_a.anchors.length))] * random(-1.5, 1.5);
   var h = random(size);
   var w = random(size);
+  
 
   this.display = function() {
-    setColor();
+    
+    var reps=1;
+    var lengthOS=0;
+    if(this.repeats){
+      reps = int(random(6));
+      this.spacer= random(size/10, size/3);
+    }
+    
     strokeWeight(random(5));
-    line(0, 0, h, w);
+    
+    push();
+    if(this.isRotated){
+      rotate(random(360));
+    }
+      
+    
+    setColor();
+    for(var i=0; i<reps;i++){
+    
+    if(Math.random() >= 0.9){
+    setColor();
+    }
+    
+    //line(0, 0, h, w);
+    if(this.repeats){
+      //stroke(255,0,0);
+    }
+    line(0, 0+this.spacer*i,w+lengthOS, 0+this.spacer*i);
+    
+    //does line weight shift?
+    if(Math.random() >= 0.75){
+      strokeWeight(random(5));
+    }
+    
+     //does line length shift?
+     if(Math.random() >= 0.5){
+       lengthOS=(size*-1, size);
+     }
+    
+    //does line rotate?
+     if(Math.random() >= 0.5){
+       rotate(1.5708);
+     }
+     
+     //does line translate?
+     if(Math.random() >= 0.5){
+       translate(w*-.5, w*.5);
+     }
+    
+    
+    }
+    
+    pop();
+    
   }
 
   this.setAnchors = function() {
@@ -664,7 +718,7 @@ function feat6(_a) {
   var numVertices = int(random(3, 10));
   if (Math.random() >= 0.25) {
     numVertices = int(random(3, 5));
-    console.log("gaus: " + numVertices);
+    //console.log("gaus: " + numVertices);
   }
 
   var spacing = 360 / numVertices;
