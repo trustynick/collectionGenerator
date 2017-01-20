@@ -1,5 +1,5 @@
 var items = [];
-var totFeats = 6;
+var totFeats = 7;
 colors = [];
 var xSpacer = 500;
 var ySpacer = 500;
@@ -8,20 +8,20 @@ var rows = 10;
 var c;
 var minFeat = 3;
 var maxFeat = 9;
-var margin=0.5;
+var margin = 0.5;
 
-var ColorCounter=0;
+var ColorCounter = 0;
 
 //var debug = true;
 var debug = false;
 
 function setup() {
 
-if(debug){
- cols = 3;
- rows = 3;
+  if (debug) {
+    cols = 3;
+    rows = 3;
 
-}
+  }
 
   //gen colors
   for (i = 0; i < 3; i++) {
@@ -29,8 +29,8 @@ if(debug){
   }
 
   c = createCanvas((cols + 1) * xSpacer, (rows + 1) * ySpacer);
-  if(debug){
-  console.log("w: " + width + "h: " + height);
+  if (debug) {
+    console.log("w: " + width + "h: " + height);
   }
   background(255, 253, 250);
 
@@ -48,8 +48,8 @@ if(debug){
 
 
       items[a].push(new Item(x, y));
-      if(debug){
-      console.log(a + ", " + j);
+      if (debug) {
+        console.log(a + ", " + j);
       }
       //items[i][j].display();
 
@@ -87,8 +87,8 @@ function Item(_x, _y) {
     noFill();
     stroke(0);
     rect(this.x - xSpacer / 2, this.y - ySpacer / 2, xSpacer, ySpacer);
-    stroke(0,0,255);
-    rect(this.x - xSpacer *margin/2, this.y - ySpacer *margin/2, xSpacer*margin, ySpacer*margin);
+    stroke(0, 0, 255);
+    rect(this.x - xSpacer * margin / 2, this.y - ySpacer * margin / 2, xSpacer * margin, ySpacer * margin);
   }
   //initialize anchors object to pass to first feature;
   var c = createVector(this.x, this.y);
@@ -115,68 +115,68 @@ function Item(_x, _y) {
 
 
 
-    for(var f=0;f<4;f++){
+    for (var f = 0; f < 4; f++) {
 
 
-      var test=checkEdges(createVector(feats[z].origin.x, feats[z].origin.y),createVector(_x,_y),margin);
+      var test = checkEdges(createVector(feats[z].origin.x, feats[z].origin.y), createVector(_x, _y), margin);
 
-      if(test!==4){
-      console.log("_____________________________________________test: "+test);
+      if (test !== 4) {
+        console.log("_____________________________________________test: " + test);
       }
 
-    switch(test){
-      case 0:
-      if(debug){
-        fill(255,0,0);
-        rect(feats[z].origin.x, feats[z].origin.y,10,10);
+      switch (test) {
+        case 0:
+          if (debug) {
+            fill(255, 0, 0);
+            rect(feats[z].origin.x, feats[z].origin.y, 10, 10);
+
+          }
+
+          feats[z].origin.x = _x + xSpacer * margin / 2;
+          if (debug) {
+            console.log("right edge");
+          }
+          break;
+
+        case 1:
+          if (debug) {
+            fill(255, 0, 0);
+            rect(feats[z].origin.x, feats[z].origin.y, 10, 10);
+
+          }
+          feats[z].origin.x = _x - xSpacer * margin / 2;
+          if (debug) {
+            console.log("left edge");
+          }
+          break;
+
+        case 2:
+          if (debug) {
+            fill(255, 0, 0);
+            rect(feats[z].origin.x, feats[z].origin.y, 10, 10);
+
+          }
+          feats[z].origin.y = _y + ySpacer * margin / 2;
+          if (debug) {
+            console.log("bottom edge");
+          }
+          break;
+
+        case 3:
+          if (debug) {
+            fill(255, 0, 0);
+            rect(feats[z].origin.x, feats[z].origin.y, 10, 10);
+          }
+          feats[z].origin.y = _y - ySpacer * margin / 2;
+          if (debug) {
+            console.log("top edge");
+          }
+          break;
+
+        case 4:
+          break;
 
       }
-
-      feats[z].origin.x=_x+xSpacer*margin/2;
-      if(debug){
-      console.log("right edge");
-      }
-      break;
-
-      case 1:
-        if(debug){
-        fill(255,0,0);
-        rect(feats[z].origin.x, feats[z].origin.y,10,10);
-
-      }
-      feats[z].origin.x=_x-xSpacer*margin/2;
-      if(debug){
-      console.log("left edge");
-      }
-      break;
-
-      case 2:
-        if(debug){
-        fill(255,0,0);
-        rect(feats[z].origin.x, feats[z].origin.y,10,10);
-
-      }
-     feats[z].origin.y=_y+ySpacer*margin/2;
-      if(debug){
-      console.log("bottom edge");
-      }
-      break;
-
-      case 3:
-         if(debug){
-        fill(255,0,0);
-        rect(feats[z].origin.x, feats[z].origin.y,10,10);
-         }
-      feats[z].origin.y=_y-ySpacer*margin/2;
-      if(debug){
-      console.log("top edge");
-      }
-      break;
-
-      case 4:
-        break;
-
-    }
     }
 
     if (debug) {
@@ -352,8 +352,17 @@ function feat3(_a) {
   }
 
   this.size = random(xSpacer / 20, xSpacer / 5);
-  this.resolution = random(.1, 10);
-  this.depth = random(5, this.size);
+  if (Math.random() >= 0.5) {
+    this.resolution = random(.02, 15);
+  }
+  else
+  this.resolution = random(.01, .04);
+  
+
+  if (Math.random() >= 0.5) {
+    this.depth = random(1, this.size);
+  } else
+    this.depth = random(0, this.size / 4);
 
   this.hasContour = Math.random() >= 0.5;
   this.isRotated = Math.random() >= 0.5;
@@ -369,8 +378,8 @@ function feat3(_a) {
 
   if (this.hasContour) {
     this.countour = new Contour(this.origin.x, this.origin.y, this.size * random(0.1, 2), this.size * random(0.1, 2));
-    if(debug){
-    console.log("init contour");
+    if (debug) {
+      console.log("init contour");
     }
   }
 
@@ -448,7 +457,7 @@ function feat4(_a) {
       //translate(this.x,this.y)
     }
 
-    var waveX = random(xSpacer/10000,xSpacer/1000);
+    var waveX = random(xSpacer / 10000, xSpacer / 1000);
     var reps;
     if (repeat) {
       reps = int(random(2, 6));
@@ -462,7 +471,7 @@ function feat4(_a) {
     var lnOffset = random(ySpacer / 100);
     var lineType = int(random(3));
 
-push(); //translate
+    push(); //translate
     for (var r = 0; r < reps; r++) {
 
 
@@ -470,8 +479,8 @@ push(); //translate
       translate(0, reps * lnOffset);
       beginShape();
 
-      if(!sameWL){
-        waveX*=random(.5,1.5);
+      if (!sameWL) {
+        waveX *= random(.5, 1.5);
       }
 
       if (lineType == 1) {
@@ -539,6 +548,7 @@ function feat5(_a) {
   var equalHW = Math.random() >= 0.5;
   var repeat = Math.random() >= 0.5;
 
+
   var rn = int(random(_a.anchors.length));
   console.log("rn=" + rn);
   this.origin = _a.anchors[rn];
@@ -563,8 +573,8 @@ function feat5(_a) {
   var aTemp2 = createVector(100, 100);
 
   this.display = function() {
-    if(debug){
-    console.log(numVertices + " sided polygon");
+    if (debug) {
+      console.log(numVertices + " sided polygon");
     }
     push();
 
@@ -625,6 +635,134 @@ function feat5(_a) {
     // console.log("anchors: " + this.anchors.anchors);
   }
 }
+
+//________________________________________________________Bezier_Polygon _____________________________________________________________
+function feat6(_a) {
+
+  var equalSides = Math.random() >= 0.5;
+  var equalHW = Math.random() >= 0.5;
+  var repeat = Math.random() >= 0.5;
+
+
+  var rn = int(random(_a.anchors.length));
+  console.log("rn=" + rn);
+  this.origin = _a.anchors[rn];
+  //console.log("origin:"+this.origin.x+", "+this.origin.y);
+  //randomized parameters
+  this.isRotated = Math.random() >= 0.5;
+
+  var size = random(xSpacer / 10, xSpacer / 5);
+
+  if (!equalHW) {
+    var h = random(size);
+    var w = random(size);
+  } else {
+    var h = random(size);
+    var w = h;
+  }
+
+  var numVertices = int(random(3, 10));
+  if (Math.random() >= 0.25) {
+    numVertices = int(random(3, 5));
+    console.log("gaus: " + numVertices);
+  }
+
+  var spacing = 360 / numVertices;
+
+  var aTemp1 = createVector(100, 100);
+  var aTemp2 = createVector(100, 100);
+
+  this.display = function() {
+    if (debug) {
+      console.log(numVertices + " sided polygon");
+    }
+    push();
+
+    setColor();
+    noStroke();
+    beginShape();
+
+    //add vertecies from previous shape
+    //vertex(_a.anchors[1].x-_a.anchors[0].x, _a.anchors[1].y-_a.anchors[0].y);
+    //vertex(_a.anchors[2].x-_a.anchors[0].x, _a.anchors[2].y-_a.anchors[0].y);
+
+
+    for (var _i = 0; _i < numVertices; _i++) {
+
+
+      if (!equalSides) {
+        var tSpacing = spacing * random(.5, 1.5);
+
+      } else var tSpacing = spacing;
+
+      var pX = cos(radians(_i * tSpacing)) * h;
+      var pY = sin(radians(_i * tSpacing)) * w;
+
+      if (Math.random() >= 0.5) {
+        //var cp1X = pX+random(size*-1,size);
+        //var cp1Y = pY+random(size*-1,size);
+        var cp1X = cos(radians(_i * tSpacing)) * (h + random(size / 4));
+        var cp1Y = sin(radians(_i * tSpacing)) * (w + random(size / 4));
+      } else {
+        //var cp1X =cos(radians(_i * tSpacing)) * (h+random(size));
+        //var cp1Y =sin(radians(_i * tSpacing)) * (w+random(size));
+        var cp1X = pX;
+        var cp1Y = pY;
+      }
+
+      if (Math.random() >= 0.5) {
+        var cp2X = cos(radians(_i * tSpacing)) * (h + random(size / 4));
+        var cp2Y = cos(radians(_i * tSpacing)) * (h + random(size / 4));
+      } else {
+        //var cp1X =cos(radians(_i * tSpacing)) * (h+random(size));
+        //var cp1Y =sin(radians(_i * tSpacing)) * (w+random(size));
+        var cp2X = pX;
+        var cp2Y = pY;
+      }
+
+
+      if (_i == 0) {
+        vertex(pX, pY);
+      } else
+        bezierVertex(cp1X, cp1Y, cp2X, cp2Y, pX, pY);
+
+      if (_i == 1) {
+        // aTemp1.x = pX;
+        // aTemp1.y = pY;
+        aTemp1 = createVector(pX, pY);
+
+      }
+      if (_i == 2) {
+        aTemp2 = createVector(pX, pY);
+      }
+      //ellipse(pX,pY,20,20);
+    }
+
+    endShape();
+    pop();
+
+  }
+
+  this.setAnchors = function() {
+    //define anchors
+    var c = this.origin;
+    var tl = createVector(this.origin.x + aTemp1.x, this.origin.y + aTemp1.y);
+    //var tl = this.origin;
+    var tr = createVector(this.origin.x + aTemp2.x, this.origin.y + aTemp2.y);
+    //var tr = this.origin;
+    //var bl = createVector(this.origin.x, this.origin.y + h);
+    //var br = createVector(this.origin.x + w, this.origin.y + h);
+    var bl = this.origin;
+    var br = this.origin;
+
+    // console.log("aTemp1: " + aTemp1.x + ", " + aTemp1.y);
+    // console.log("aTemp2: " + aTemp2.x + ", " + aTemp2.y);
+
+    this.anchors = new Anchors(c, tl, tr, bl, br);
+    // console.log("anchors: " + this.anchors.anchors);
+  }
+}
+
 
 
 
@@ -757,9 +895,18 @@ function cDrawBurst(_x, _y, _h, _w) {
 
   this.radius = random(this.w / 20, this.w / 6);
   //this.radius = 10;
-  this.resolution = random(.01, 10);
-  this.depth = random(5, this.radius);
+  this.size = random(xSpacer / 20, xSpacer / 5);
+  if (Math.random() >= 0.5) {
+    this.resolution = random(.02, 15);
+  }
+  else
+  this.resolution = random(.01, .04);
+  
 
+  if (Math.random() >= 0.5) {
+    this.depth = random(1, this.size);
+  } else
+    this.depth = random(0, this.size / 4);
 
   noStroke();
   push();
@@ -784,11 +931,10 @@ function setColor() {
 
   stroke(red(colors[col]), green(colors[col]), blue(colors[col]), random(100, 200));
   fill(red(colors[col]), green(colors[col]), blue(colors[col]), random(100, 200));
-  if(ColorCounter<2){
-  ColorCounter++;
-  }
-  else
-  ColorCounter=0;
+  if (ColorCounter < 2) {
+    ColorCounter++;
+  } else
+    ColorCounter = 0;
 }
 
 //___________________________set colors_____________________________________________________________
@@ -801,39 +947,38 @@ function Anchors(_a1, _a2) {
 
 //___________________________check edges_____________________________________________________________
 
-function checkEdges(_a,_b,_m){
+function checkEdges(_a, _b, _m) {
 
   //right
 
-  if(_a.x>_b.x+xSpacer*_m/2){
-    if(debug){
-    console.log(_a.x+", "+(_b.x+xSpacer*_m/2));
+  if (_a.x > _b.x + xSpacer * _m / 2) {
+    if (debug) {
+      console.log(_a.x + ", " + (_b.x + xSpacer * _m / 2));
     }
     return 0;
   }
   //left
-  else if(_a.x<_b.x-xSpacer*_m/2){
-    if(debug){
-    console.log(_a.x+", "+(_b.x-xSpacer*_m/2));
+  else if (_a.x < _b.x - xSpacer * _m / 2) {
+    if (debug) {
+      console.log(_a.x + ", " + (_b.x - xSpacer * _m / 2));
     }
     return 1;
   }
   //bottom
-  else if(_a.y>_b.y+ySpacer*_m/2){
-    if(debug){
-    console.log(_a.y+", "+(_b.y+ySpacer*_m/2));
+  else if (_a.y > _b.y + ySpacer * _m / 2) {
+    if (debug) {
+      console.log(_a.y + ", " + (_b.y + ySpacer * _m / 2));
     }
     return 2;
   }
   //top
-  else if(_a.y<_b.y-ySpacer*_m/2){
-    if(debug){
-    console.log(_a.y+", "+(_b.y-ySpacer*_m/2));
+  else if (_a.y < _b.y - ySpacer * _m / 2) {
+    if (debug) {
+      console.log(_a.y + ", " + (_b.y - ySpacer * _m / 2));
     }
     return 3;
-  }
-  else
-  return 4
+  } else
+    return 4
 
 
 }
