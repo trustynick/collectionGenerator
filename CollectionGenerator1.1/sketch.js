@@ -1,5 +1,6 @@
 var items = [];
-var totFeats = 7;
+//var totFeats = 7;
+var totFeats = 8;
 colors = [];
 var xSpacer = 500;
 var ySpacer = 500;
@@ -322,63 +323,63 @@ function feat2(_a) {
   //var w = this.origin = _a.anchors[int(random(_a.anchors.length))] * random(-1.5, 1.5);
   var h = random(size);
   var w = random(size);
-  
+
 
   this.display = function() {
-    
-    var reps=1;
-    var lengthOS=0;
-    if(this.repeats){
+
+    var reps = 1;
+    var lengthOS = 0;
+    if (this.repeats) {
       reps = int(random(6));
-      this.spacer= random(size/10, size/3);
+      this.spacer = random(size / 10, size / 3);
     }
-    
+
     strokeWeight(random(5));
-    
+
     push();
-    if(this.isRotated){
+    if (this.isRotated) {
       rotate(random(360));
     }
-      
-    
+
+
     setColor();
-    for(var i=0; i<reps;i++){
-    
-    if(Math.random() >= 0.9){
-    setColor();
+    for (var i = 0; i < reps; i++) {
+
+      if (Math.random() >= 0.9) {
+        setColor();
+      }
+
+      //line(0, 0, h, w);
+      if (this.repeats) {
+        //stroke(255,0,0);
+      }
+      line(0, 0 + this.spacer * i, w + lengthOS, 0 + this.spacer * i);
+
+      //does line weight shift?
+      if (Math.random() >= 0.75) {
+        strokeWeight(random(5));
+      }
+
+      //does line length shift?
+      if (Math.random() >= 0.5) {
+        lengthOS = (size * -1, size);
+      }
+
+      //does line rotate?
+      if (Math.random() >= 0.5) {
+        rotate(1.5708);
+      }
+
+      //does line translate?
+      if (Math.random() >= 0.5) {
+        translate(w * -.5, w * .5);
+      }
+
+
     }
-    
-    //line(0, 0, h, w);
-    if(this.repeats){
-      //stroke(255,0,0);
-    }
-    line(0, 0+this.spacer*i,w+lengthOS, 0+this.spacer*i);
-    
-    //does line weight shift?
-    if(Math.random() >= 0.75){
-      strokeWeight(random(5));
-    }
-    
-     //does line length shift?
-     if(Math.random() >= 0.5){
-       lengthOS=(size*-1, size);
-     }
-    
-    //does line rotate?
-     if(Math.random() >= 0.5){
-       rotate(1.5708);
-     }
-     
-     //does line translate?
-     if(Math.random() >= 0.5){
-       translate(w*-.5, w*.5);
-     }
-    
-    
-    }
-    
+
     pop();
-    
+
   }
 
   this.setAnchors = function() {
@@ -408,10 +409,9 @@ function feat3(_a) {
   this.size = random(xSpacer / 20, xSpacer / 5);
   if (Math.random() >= 0.5) {
     this.resolution = random(.02, 15);
-  }
-  else
-  this.resolution = random(.01, .04);
-  
+  } else
+    this.resolution = random(.01, .04);
+
 
   if (Math.random() >= 0.5) {
     this.depth = random(1, this.size);
@@ -817,6 +817,117 @@ function feat6(_a) {
   }
 }
 
+//________________________________________________________Spiral _____________________________________________________________
+function feat7(_a) {
+
+//directionchange
+ var irreg = Math.random() >= 0.7;
+
+  var rn = int(random(_a.anchors.length));
+
+  this.origin = _a.anchors[rn];
+  this.size = random(0, xSpacer / 15);
+
+  //revisit random range
+  var h = this.size * 2 + this.depth;
+  var w = this.size * 2 + this.depth;
+
+  var length = random(xSpacer/10, xSpacer*2);
+
+  var a = 0;
+  //var r = random(.1,20);
+  var r = this.size;
+
+//clean spiral
+if (Math.random() >= 0.5) {
+  var aDelt = random(.02,.2);
+  var rDelt = random(.02,.2);
+}
+//radial interferance
+else{
+  var aDelt = random(.2,.9);
+  var rDelt = random(.02,.2);
+  r*=random(-2,2);
+}
+
+
+  
+  //radial
+
+//scribble
+
+//curved line
+
+
+  // fill(255, 0, 0);
+  // noStroke();
+  // ellipse(this.origin.x, this.origin.y, 10, 10);
+  
+  setColor();
+
+  this.display = function() {
+    push();
+
+    strokeWeight(random(.5,3));
+    noFill();
+
+    beginShape()
+      //randomize
+
+
+    for (var i = 0; i < length; i++) {
+
+      var x = r * cos(a);
+      var y = r * sin(a);
+
+  if(irreg){
+    a += random(aDelt);
+    r += random(rDelt);
+  }
+  else{
+      a += aDelt;
+      r += rDelt;
+  }
+      vertex(x, y);
+    }
+    endShape();
+    pop();
+  }
+
+  this.setAnchors = function() {
+    //define anchors
+    var left = createVector(this.origin.x - w / 2, this.origin.y);
+    var right = createVector(this.origin.x + w / 2, this.origin.y);
+    var top = createVector(this.origin.x, this.origin.y - h / 2);
+    var bottom = createVector(this.origin.x, this.origin.y + h / 2);
+
+    this.anchors = new Anchors(this.origin, top, right, bottom, left);
+  }
+
+}
+
+
+
+//resistor
+
+
+
+
+// radio signal
+
+
+
+// zigzag
+//box
+
+//cone
+
+//target
+
+//lathe
+
+//
+
 
 
 
@@ -952,10 +1063,9 @@ function cDrawBurst(_x, _y, _h, _w) {
   this.size = random(xSpacer / 20, xSpacer / 5);
   if (Math.random() >= 0.5) {
     this.resolution = random(.02, 15);
-  }
-  else
-  this.resolution = random(.01, .04);
-  
+  } else
+    this.resolution = random(.01, .04);
+
 
   if (Math.random() >= 0.5) {
     this.depth = random(1, this.size);
