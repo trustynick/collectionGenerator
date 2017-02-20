@@ -13,11 +13,13 @@ var margin = 0.5;
 
 var ColorCounter = 0;
 
-//var debug = true;
 var debug = false;
+//var debug = true;
+
+cW;
+cH;
 
 function setup() {
-
   if (debug) {
     cols = 3;
     rows = 3
@@ -28,8 +30,8 @@ function setup() {
     colors.push(color(random(255), random(255), random(255), 255));
   }
 
-  var cW = (cols + 1) * xSpacer;
-  var cH = (rows + 1) * ySpacer;
+  cW = (cols + 1) * xSpacer;
+  cH = (rows + 1) * ySpacer;
 
 
   c = createCanvas(cW, cH);
@@ -42,7 +44,6 @@ function setup() {
   }
   //background(255, 253, 250);
   background(254, 254, 250);
-
 
   //create item obejcts
   for (a = 0; a < cols; a++) {
@@ -60,14 +61,19 @@ function setup() {
       if (debug) {
         console.log(a + ", " + j);
       }
-      //items[i][j].display();
-
+      items[a][j].display();
 
     }
   }
 }
 
 function draw() {
+  for (a = 0; a < cols; a++) {
+    for (j = 0; j < rows; j++) {
+
+i//tems[a][j].display();
+    }
+  }
 
 }
 
@@ -87,11 +93,23 @@ function Item(_x, _y) {
     var itemColor = color(random(255), random(255), random(255), 255);
     for (i = 0; i < 3; i++) {
       colors[i] = itemColor;
+
+      push();
+      stroke(0,10);
+      strokeWeight(1);
+      line(0,_y, cW,_y);
+      line(_x,0, _x,cH);
+      stroke(200,0,0,10);
+      noFill();
+      rectMode(CENTER);
+      rect(_x,_y,xSpacer,ySpacer);
+      pop();
     }
   }
 
   //how many features does it have
   this.featNum = int(random(minFeat, maxFeat));
+  //set center coordinates
   this.x = _x;
   this.y = _y;
 
@@ -99,68 +117,95 @@ function Item(_x, _y) {
   var c = createVector(this.x, this.y);
   var initAnchors = new Anchors(c, c, c, c, c);
   //console.log(initAnchors.)
-  var feats = [];
+  //
+  this.feats = [];
 
   for (var z = 0; z < this.featNum; z++) {
     var name = window["feat" + int(random(totFeats))];
     //var name = window["feat" + 5];
     if (z === 0) {
-      feats.push(new name(initAnchors));
+      this.feats.push(new name(initAnchors));
     } else {
-      feats.push(new name(feats[z - 1].anchors));
+      this.feats.push(new name(this.feats[z - 1].anchors));
       //feats.push(new name(initAnchors));
     }
 
+//check centering
     for (var f = 0; f < 4; f++) {
-      var test = checkEdges(createVector(feats[z].origin.x, feats[z].origin.y), createVector(_x, _y), margin);
+      var test = checkEdges(createVector(this.feats[z].origin.x, this.feats[z].origin.y), createVector(_x, _y), margin/2);
       if (test !== 4) {
         console.log("_____________________________________________test: " + test);
       }
       switch (test) {
-        case 0:
+        //
+        case 0: //too far right
           if (debug) {
             fill(255, 0, 0);
-            rect(feats[z].origin.x, feats[z].origin.y, 10, 10);
+            rect(this.feats[z].origin.x, this.feats[z].origin.y, 10, 10);
           }
 
-          feats[z].origin.x = _x + xSpacer * margin / 2;
+          //more left
+          this.feats[z].origin.x = random(_x-xSpacer*margin/2, _x+xSpacer*margin/2);
           if (debug) {
             console.log("right edge");
+            push();
+            stroke(255,0,0);
+            strokeWeight(1);
+            line(_x,_y,this.feats[z].origin.x,this.feats[z].origin.y);
+            pop();
           }
           break;
 
-        case 1:
+        case 1: //too far left
           if (debug) {
-            fill(255, 0, 0);
-            rect(feats[z].origin.x, feats[z].origin.y, 10, 10);
+            fill(0, 255, 0);
+            rect(this.feats[z].origin.x, this.feats[z].origin.y, 10, 10);
 
           }
-          feats[z].origin.x = _x - xSpacer * margin / 2;
+
+          //move right
+          this.feats[z].origin.x = random(_x-xSpacer*margin/2, _x+xSpacer*margin/2);
+
           if (debug) {
             console.log("left edge");
+            push();
+            stroke(0,255,0);
+            strokeWeight(1);
+            line(_x,_y,this.feats[z].origin.x,this.feats[z].origin.y);
+            pop();
           }
           break;
 
         case 2:
           if (debug) {
-            fill(255, 0, 0);
-            rect(feats[z].origin.x, feats[z].origin.y, 10, 10);
+            fill(0, 0, 255);
+            rect(this.feats[z].origin.x, this.feats[z].origin.y, 10, 10);
 
           }
-          feats[z].origin.y = _y + ySpacer * margin / 2;
+          this.feats[z].origin.y = random(_y-ySpacer*margin/2, _y+ySpacer*margin/2);
           if (debug) {
             console.log("bottom edge");
+            push();
+            stroke(255,0,255);
+            strokeWeight(1);
+            line(_x,_y,this.feats[z].origin.x,this.feats[z].origin.y);
+            pop();
           }
           break;
 
         case 3:
           if (debug) {
-            fill(255, 0, 0);
-            rect(feats[z].origin.x, feats[z].origin.y, 10, 10);
+            fill(255, 255, 0);
+            rect(this.feats[z].origin.x, this.feats[z].origin.y, 10, 10);
           }
-          feats[z].origin.y = _y - ySpacer * margin / 2;
+          this.feats[z].origin.y = random(_y-ySpacer*margin/2, _y+ySpacer*margin/2);
           if (debug) {
             console.log("top edge");
+            push();
+            stroke(255,255,0);
+            strokeWeight(1);
+            line(_x,_y,this.feats[z].origin.x,this.feats[z].origin.y);
+            pop();
           }
           break;
 
@@ -170,31 +215,71 @@ function Item(_x, _y) {
       }
     }
 
+
     if (debug) {
-      //draw red circle at center
-      fill(255,0,0);
-      ellipse(feats[z].origin.x, feats[z].origin.y, xSpacer / 45, xSpacer / 45);
+      //draw pink circle at center
+      fill(255,0,255);
+      ellipse(this.feats[z].origin.x, this.feats[z].origin.y, xSpacer / 45, xSpacer / 45);
     }
 
-    push();
-    translate(feats[z].origin.x, feats[z].origin.y);
+    push();//translate
+    translate(this.feats[z].origin.x, this.feats[z].origin.y);
 
     //console.log( )
-    display();
-    feats[z].display();
-    feats[z].setAnchors();
+    //this.feats[z].display();
+    this.feats[z].setAnchors();
+    pop(); //translate
+  }
+
+
+  this.display = function(){
+
+    for (var i = 0; i < this.featNum; i++) {
+      push();
+      translate(this.feats[i].origin.x, this.feats[i].origin.y);
+    this.feats[i].display();
     pop();
   }
 
-
-  function display(item){
-
-    for (var i = 0; i < this.featNum; i++) {
-    feats[i].display();
   }
 
-  }
+}
 
+//___________________________check edges_____________________________________________________________
+
+function checkEdges(_a, _b, _m) {
+  //right
+  if (_a.x > _b.x + xSpacer * _m) {
+    //if (_a.x > _b.x) {
+
+    if (debug) {
+      console.log(_a.x + ", " + (_b.x + xSpacer * _m));
+    }
+    return 0;
+  }
+  //left
+  else if (_a.x < _b.x - xSpacer * _m) {
+    if (debug) {
+      console.log(_a.x + ", " + (_b.x - xSpacer * _m));
+    }
+    return 1;
+  }
+  //bottom
+  else if (_a.y > _b.y + ySpacer * _m) {
+    if (debug) {
+      console.log(_a.y + ", " + (_b.y + ySpacer * _m));
+    }
+    return 2;
+  }
+  //top
+  else if (_a.y < _b.y - ySpacer * _m) {
+    if (debug) {
+      console.log(_a.y + ", " + (_b.y - ySpacer * _m));
+    }
+    return 3;
+  }
+  else
+    return 4
 }
 
 
@@ -380,42 +465,4 @@ function Anchors(_a1, _a2) {
   for (var i = 0; i < arguments.length; i++) {
     this.anchors.push(arguments[i]);
   }
-}
-
-//___________________________check edges_____________________________________________________________
-
-function checkEdges(_a, _b, _m) {
-
-  //right
-
-  if (_a.x > _b.x + xSpacer * _m / 2) {
-    if (debug) {
-      console.log(_a.x + ", " + (_b.x + xSpacer * _m / 2));
-    }
-    return 0;
-  }
-  //left
-  else if (_a.x < _b.x - xSpacer * _m / 2) {
-    if (debug) {
-      console.log(_a.x + ", " + (_b.x - xSpacer * _m / 2));
-    }
-    return 1;
-  }
-  //bottom
-  else if (_a.y > _b.y + ySpacer * _m / 2) {
-    if (debug) {
-      console.log(_a.y + ", " + (_b.y + ySpacer * _m / 2));
-    }
-    return 2;
-  }
-  //top
-  else if (_a.y < _b.y - ySpacer * _m / 2) {
-    if (debug) {
-      console.log(_a.y + ", " + (_b.y - ySpacer * _m / 2));
-    }
-    return 3;
-  } else
-    return 4
-
-
 }

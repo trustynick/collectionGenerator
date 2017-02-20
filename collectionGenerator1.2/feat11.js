@@ -6,7 +6,10 @@ function feat11(_a) {
 
   var rn = int(random(_a.anchors.length));
   this.origin = _a.anchors[rn];
-  var fill = Math.random() >= 0.5;
+  var filled = Math.random() >= 0.5;
+  var linked = Math.random() >= 0.5;
+
+
 
   var tAnc1X;
   var tAnc1Y;
@@ -23,7 +26,6 @@ function feat11(_a) {
 
   this.r1;
   this.r2;
-
   this.display = function() {
 console.log("display 10");
 
@@ -52,11 +54,28 @@ pop();
     this.anchors = new Anchors(c, tl, tr, bl, br);
   }
 
-  function circBlob(rad, num, spread){
+  circBlob = function(rad, num, spread){
+    this.circCenters = [];
+
+
     for(var i=0; i<num; i++){
       var x = random(rad*spread*-1, rad*spread);
       var y =random(rad*spread*-1, rad*spread);
-      ellipse(x,y, random(rad));
+
+      this.circCenters.push(createVector(x, y));
+
+      ellipse(this.circCenters[i].x,this.circCenters[i].y, random(rad));
+
+
+if(linked){
+      if(i!=0){
+      push();
+      //setColor();
+      strokeWeight(random(1,3));
+      line(this.circCenters[i-1].x,this.circCenters[i-1].y,this.circCenters[i].x,this.circCenters[i].y);
+      pop();
+    }
+  }
 
       if(i==2){
         tAnc2X=x;
@@ -68,5 +87,6 @@ pop();
       }
     }
   }
+
 
 }

@@ -28,7 +28,7 @@ if (Math.random() >= 0.5) {
 else{
   var aDelt = random(.2,.9);
   var rDelt = random(.02,.2);
-  r*=random(-2,2);
+  r*=random(-1.5,1.5);
 }
 
 
@@ -40,10 +40,6 @@ else{
 //curved line
 
 
-  // fill(255, 0, 0);
-  // noStroke();
-  // ellipse(this.origin.x, this.origin.y, 10, 10);
-
   setColor();
 
   this.display = function() {
@@ -54,11 +50,8 @@ else{
     noFill();
 
     beginShape()
-      //randomize
-
 
     for (var i = 0; i < length; i++) {
-
       var x = r * cos(a);
       var y = r * sin(a);
 

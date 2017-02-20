@@ -4,7 +4,7 @@ function feat3(_a) {
 
   var rn = int(random(_a.anchors.length));
   this.origin = _a.anchors[rn];
-
+  this.filled =Math.random() >= 0.5;
 
 
   if (debug) {
@@ -12,7 +12,7 @@ function feat3(_a) {
     console.log("burst at " + this.origin.x + ", " + this.origin.y);
   }
 
-  this.size = random(xSpacer / 20, xSpacer / 5);
+  this.size = random(xSpacer / 20, xSpacer / 6);
   if (Math.random() >= 0.5) {
     this.resolution = random(.02, 15);
   } else
@@ -54,7 +54,13 @@ function feat3(_a) {
 console.log("display 3");
 
     setColor();
+    //if(this.filled){
     noStroke();
+  //}
+  // else {
+  //   noFill();
+  //   strokeWeight(random(.5,1));
+  // }
     beginShape();
     for (var d = 0; d < sweepAngle * this.resolution; d++) {
       //Change the radius for every vertex

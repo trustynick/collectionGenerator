@@ -36,16 +36,17 @@ console.log("display 1");
       this.w = random(size);
     }
 
+    rectMode(CENTER);
     rect(0, 0, this.h, this.w);
 
   }
 
   this.setAnchors = function() {
-    var c = createVector(this.origin.x + this.w / 2, this.origin.y + this.h / 2);
-    var tl = this.origin;
-    var tr = createVector(this.origin.x + this.w, this.origin.y);
-    var bl = createVector(this.origin.x, this.origin.y + this.h);
-    var br = createVector(this.origin.x + this.w, this.origin.y + this.h);
+    var c = createVector(this.origin.x, this.origin.y);
+    var tl = createVector(this.origin.x-this.w/2, this.origin.y-this.h/2);
+    var tr = createVector(this.origin.x + this.w/2, this.origin.y-this.h/2);
+    var bl = createVector(this.origin.x-this.w/2, this.origin.y + this.h/2);
+    var br = createVector(this.origin.x + this.w/2, this.origin.y + this.h/2);
 
     this.anchors = new Anchors(c, tl, tr, bl, br);
   }

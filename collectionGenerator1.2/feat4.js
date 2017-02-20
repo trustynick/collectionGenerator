@@ -50,7 +50,7 @@ function feat4(_a) {
     }
 
     var lnOffset = random(ySpacer / 100);
-    var lineType = int(random(3));
+    var lineType = int(random(5));
 
     push(); //translate
     for (var r = 0; r < reps; r++) {
