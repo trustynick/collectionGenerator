@@ -1,6 +1,6 @@
 var items = [];
 //var totFeats = 7;
-var totFeats = 9;
+var totFeats = 12;
 colors = [];
 var xSpacer = 500;
 var ySpacer = 500;
@@ -20,8 +20,7 @@ function setup() {
 
   if (debug) {
     cols = 3;
-    rows = 3;
-
+    rows = 3
   }
 
   //gen colors
@@ -29,7 +28,15 @@ function setup() {
     colors.push(color(random(255), random(255), random(255), 255));
   }
 
-  c = createCanvas((cols + 1) * xSpacer, (rows + 1) * ySpacer);
+  var cW = (cols + 1) * xSpacer;
+  var cH = (rows + 1) * ySpacer;
+
+
+  c = createCanvas(cW, cH);
+
+  // var scaleAmount = windowHeight/cH;
+  // scale(scaleAmount);
+
   if (debug) {
     console.log("w: " + width + "h: " + height);
   }
@@ -60,6 +67,10 @@ function setup() {
   }
 }
 
+function draw() {
+
+}
+
 function keyPressed() {
   if (keyCode === LEFT_ARROW) {
     saveCanvas(c, 'Collected_' + year() + '_' + month() + '_' + day() + '_' + hour() + '_' + minute() + '_' + second() + '.jpg', 'jpg');
@@ -67,10 +78,10 @@ function keyPressed() {
   }
 }
 
-//item class
 
+
+//____________________________________________item class____________________________________________
 function Item(_x, _y) {
-
   //for debugging set each item to a single color for easy differntitation
   if (debug) {
     var itemColor = color(random(255), random(255), random(255), 255);
@@ -79,32 +90,18 @@ function Item(_x, _y) {
     }
   }
 
-  this.itemFeats = int(random(minFeat, maxFeat));
+  //how many features does it have
+  this.featNum = int(random(minFeat, maxFeat));
   this.x = _x;
   this.y = _y;
 
-  if (debug) {
-    fill(255, 0, 0);
-    ellipse(this.x, this.y, xSpacer / 40, xSpacer / 40);
-    noFill();
-    stroke(0);
-    rect(this.x - xSpacer / 2, this.y - ySpacer / 2, xSpacer, ySpacer);
-    stroke(0, 0, 255);
-    rect(this.x - xSpacer * margin / 2, this.y - ySpacer * margin / 2, xSpacer * margin, ySpacer * margin);
-  }
   //initialize anchors object to pass to first feature;
   var c = createVector(this.x, this.y);
-  // var t = createVector(this.x, this.y - random(ySpacer / 2));
-  // var b = createVector(this.x, this.y + random(ySpacer / 2));
-  // var r = createVector(this.x + random(xSpacer / 2), this.y);
-  // var l = createVector(this.x - random(xSpacer / 2), this.y);
   var initAnchors = new Anchors(c, c, c, c, c);
   //console.log(initAnchors.)
-
   var feats = [];
 
-
-  for (var z = 0; z < this.itemFeats; z++) {
+  for (var z = 0; z < this.featNum; z++) {
     var name = window["feat" + int(random(totFeats))];
     //var name = window["feat" + 5];
     if (z === 0) {
@@ -114,24 +111,16 @@ function Item(_x, _y) {
       //feats.push(new name(initAnchors));
     }
 
-
-
-
     for (var f = 0; f < 4; f++) {
-
-
       var test = checkEdges(createVector(feats[z].origin.x, feats[z].origin.y), createVector(_x, _y), margin);
-
       if (test !== 4) {
         console.log("_____________________________________________test: " + test);
       }
-
       switch (test) {
         case 0:
           if (debug) {
             fill(255, 0, 0);
             rect(feats[z].origin.x, feats[z].origin.y, 10, 10);
-
           }
 
           feats[z].origin.x = _x + xSpacer * margin / 2;
@@ -182,38 +171,38 @@ function Item(_x, _y) {
     }
 
     if (debug) {
-      fill(0);
+      //draw red circle at center
+      fill(255,0,0);
       ellipse(feats[z].origin.x, feats[z].origin.y, xSpacer / 45, xSpacer / 45);
-
     }
 
     push();
     translate(feats[z].origin.x, feats[z].origin.y);
 
     //console.log( )
+    display();
     feats[z].display();
     feats[z].setAnchors();
     pop();
   }
+
+
+  function display(item){
+
+    for (var i = 0; i < this.featNum; i++) {
+    feats[i].display();
+  }
+
+  }
+
 }
 
 
-
-
-
-
-//resistor
-// radio signal
 // zigzag
 //box
 //cone
 //target
 //lathe
-
-//
-
-
-
 
 //_________________________________________________contour functions_____________________________________________________________
 

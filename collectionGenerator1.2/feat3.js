@@ -5,6 +5,8 @@ function feat3(_a) {
   var rn = int(random(_a.anchors.length));
   this.origin = _a.anchors[rn];
 
+
+
   if (debug) {
     console.log("I pulled anchor " + rn);
     console.log("burst at " + this.origin.x + ", " + this.origin.y);
@@ -25,8 +27,14 @@ function feat3(_a) {
   this.hasContour = Math.random() >= 0.5;
   this.isRotated = Math.random() >= 0.5;
   this.isEqual = Math.random() >= 0.5;
-
-
+  var fullSweep = Math.random() >= 0.5;
+  var sweepAngle;
+  if(fullSweep){
+    sweepAngle=360;
+  }
+  else {
+    sweepAngle=int(random(1,360));
+  }
 
   //revisit random range
   var h = this.size * 2 + this.depth;
@@ -48,7 +56,7 @@ console.log("display 3");
     setColor();
     noStroke();
     beginShape();
-    for (var d = 0; d < 360 * this.resolution; d++) {
+    for (var d = 0; d < sweepAngle * this.resolution; d++) {
       //Change the radius for every vertex
       var radius = this.size + random(this.depth);
       var a = cos(radians(d / this.resolution)) * radius;

@@ -58,6 +58,7 @@ function feat4(_a) {
 
 
       translate(0, reps * lnOffset);
+
       beginShape();
 
       if (!sameWL) {
@@ -66,22 +67,24 @@ function feat4(_a) {
 
       if (lineType == 1) {
         //draw spikey line
-        for (var i = 0; i < xSpacer * random(0.1, 3); i++) {
+          strokeWeight(random(1.1));
+        for (var i = 0; i < xSpacer * random(.5, 4); i++) {
           //2 pixel spacing on the x-axis.
-
-
           var x = i * waveX;
-
-
           //200 pixel high waveform on the y-axis.
-          if (Math.random() >= 0.75) {
-            var y = cos(i * radians(2)) * random(100);
-          } else
-            var y = cos(i * radians(2)) * size;
+          if (Math.random() >= 0.5) {
+            //stroke(255,0,0);
+            var y = cos(i * radians(2)) * random(60);
+          }
+          else{
+          //stroke(0,255,0);
+            var y = cos(i * radians(2)) * random(size);
+          }
 
           vertex(x, y);
         }
-      } else
+      }
+      else
       //draw sinewave
         for (var i = 0; i < xSpacer * random(0.5, 30); i++) {
         //2 pixel spacing on the x-axis.

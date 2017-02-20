@@ -13,7 +13,7 @@ function feat7(_a) {
   var h = this.size * 2 + this.depth;
   var w = this.size * 2 + this.depth;
 
-  var length = random(xSpacer/10, xSpacer*2);
+  var length = random(xSpacer/10, xSpacer*1.5);
 
   var a = 0;
   //var r = random(.1,20);
