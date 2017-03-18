@@ -13,13 +13,14 @@ function feat1(_a) {
   }
 
   //revisit -- mke range proportional to grid
-  var size = random(xSpacer / 30, xSpacer / 3);
+  this.size = random(sizeMin, sizeMax);
   this.h;
   this.w;
 
   this.display = function() {
+    if(debug){
 console.log("display 1");
-
+}
     if (this.isRotated) {
       rotate(random(360));
     }
@@ -29,11 +30,11 @@ console.log("display 1");
 
 
     if (this.isEqual) {
-      this.h = size;
-      this.w = size;
+      this.h = this.size;
+      this.w = this.size;
     } else {
-      this.h = random(size);
-      this.w = random(size);
+      this.h = random(this.size);
+      this.w = random(this.size);
     }
 
     rectMode(CENTER);

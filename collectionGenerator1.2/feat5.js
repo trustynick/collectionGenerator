@@ -7,19 +7,21 @@ function feat5(_a) {
 
 
   var rn = int(random(_a.anchors.length));
+  if(debug){
   console.log("rn=" + rn);
+}
   this.origin = _a.anchors[rn];
   //console.log("origin:"+this.origin.x+", "+this.origin.y);
   //randomized parameters
   this.isRotated = Math.random() >= 0.5;
-
-  var size = random(xSpacer / 10, xSpacer / 5);
+this.size = random(sizeMin, sizeMax);
+  //var size = random(xSpacer / 10, xSpacer / 5);
 
   if (!equalHW) {
-    var h = random(size);
-    var w = random(size);
+    var h = random(this.size/4);
+    var w = random(this.size/4);
   } else {
-    var h = random(size);
+    var h = random(this.size);
     var w = h;
   }
 
@@ -30,7 +32,9 @@ function feat5(_a) {
   var aTemp2 = createVector(100, 100);
 
   this.display = function() {
+    if(debug){
     console.log("display 5");
+  }
     if (debug) {
       console.log(numVertices + " sided polygon");
     }

@@ -7,17 +7,18 @@ function feat7(_a) {
   var rn = int(random(_a.anchors.length));
 
   this.origin = _a.anchors[rn];
-  this.size = random(0, xSpacer / 15);
+  this.size = random(sizeMin, sizeMax);
+  //this.size = random(0, xSpacer / 15);
 
   //revisit random range
-  var h = this.size * 2 + this.depth;
-  var w = this.size * 2 + this.depth;
+  var h = this.size;
+  var w = this.size;
 
-  var length = random(xSpacer/10, xSpacer*1.5);
-
+  var length = random(xSpacer/10, xSpacer/2);
   var a = 0;
   //var r = random(.1,20);
-  var r = this.size;
+  var r = random(.5, this.size/1.25);
+  //var r = 1;
 
 //clean spiral
 if (Math.random() >= 0.5) {
@@ -43,7 +44,9 @@ else{
   setColor();
 
   this.display = function() {
+    if(debug){
     console.log("display 7");
+  }
     push();
 
     strokeWeight(random(.5,3));

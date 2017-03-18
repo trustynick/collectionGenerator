@@ -17,14 +17,16 @@ function feat4(_a) {
   //revisit -- mke range proportional to grid
 
 
-
-  var size = random(50, 100);
+  //var size = random(50, 100);
+  this.size = random(sizeMin, sizeMax);
   //revisit random range
-  var h = random(size);
-  var w = random(size);
+  var h = random(this.size/4);
+  var w = random(this.size/4);
 
   this.display = function() {
+    if(debug){
     console.log("display 4");
+  }
     //set color
     // var col=int(random(3));
     // stroke(red(colors[col]),green(colors[col]),blue(colors[col]),random(100,150));
@@ -78,7 +80,7 @@ function feat4(_a) {
           }
           else{
           //stroke(0,255,0);
-            var y = cos(i * radians(2)) * random(size);
+            var y = cos(i * radians(2)) * random(this.size);
           }
 
           vertex(x, y);
@@ -94,7 +96,7 @@ function feat4(_a) {
 
         //200 pixel high waveform on the y-axis.
 
-        var y = sin(i * radians(2)) * size / 10;
+        var y = sin(i * radians(2)) * this.size / 10;
 
 
         vertex(x, y);

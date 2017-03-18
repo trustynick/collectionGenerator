@@ -1,5 +1,7 @@
 //_____________________________________burst1_________________________________________________________
 //burst 1
+
+//too big
 function feat3(_a) {
 
   var rn = int(random(_a.anchors.length));
@@ -12,7 +14,9 @@ function feat3(_a) {
     console.log("burst at " + this.origin.x + ", " + this.origin.y);
   }
 
-  this.size = random(xSpacer / 20, xSpacer / 6);
+//this.size = random(xSpacer / 20, xSpacer / 6);
+  this.size = random(sizeMin, sizeMax/4);
+
   if (Math.random() >= 0.5) {
     this.resolution = random(.02, 15);
   } else
@@ -22,7 +26,7 @@ function feat3(_a) {
   if (Math.random() >= 0.5) {
     this.depth = random(1, this.size);
   } else
-    this.depth = random(0, this.size / 4);
+    this.depth = random(0, this.size);
 
   this.hasContour = Math.random() >= 0.5;
   this.isRotated = Math.random() >= 0.5;
@@ -50,8 +54,9 @@ function feat3(_a) {
   }
 
   this.display = function() {
-
+if(debug){
 console.log("display 3");
+}
 
     setColor();
     //if(this.filled){

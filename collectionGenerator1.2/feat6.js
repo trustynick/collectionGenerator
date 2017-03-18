@@ -7,19 +7,22 @@ function feat6(_a) {
 
 
   var rn = int(random(_a.anchors.length));
+  if(debug){
   console.log("rn=" + rn);
+}
   this.origin = _a.anchors[rn];
   //console.log("origin:"+this.origin.x+", "+this.origin.y);
   //randomized parameters
   this.isRotated = Math.random() >= 0.5;
 
-  var size = random(xSpacer / 10, xSpacer / 5);
+  this.size = random(sizeMin, sizeMax);
+  //var size = random(xSpacer / 10, xSpacer / 5);
 
   if (!equalHW) {
-    var h = random(size);
-    var w = random(size);
+    var h = random(this.size/4);
+    var w = random(this.size/4);
   } else {
-    var h = random(size);
+    var h = random(this.size);
     var w = h;
   }
 
@@ -35,7 +38,9 @@ function feat6(_a) {
   var aTemp2 = createVector(100, 100);
 
   this.display = function() {
+    if(debug){
     console.log("display 6");
+  }
     if (debug) {
       console.log(numVertices + " sided polygon");
     }
@@ -62,23 +67,23 @@ function feat6(_a) {
       var pY = sin(radians(_i * tSpacing)) * w;
 
       if (Math.random() >= 0.5) {
-        //var cp1X = pX+random(size*-1,size);
-        //var cp1Y = pY+random(size*-1,size);
-        var cp1X = cos(radians(_i * tSpacing)) * (h + random(size / 4));
-        var cp1Y = sin(radians(_i * tSpacing)) * (w + random(size / 4));
+        //var cp1X = pX+random(this.size*-1,this.size);
+        //var cp1Y = pY+random(this.size*-1,this.size);
+        var cp1X = cos(radians(_i * tSpacing)) * (h + random(this.size / 4));
+        var cp1Y = sin(radians(_i * tSpacing)) * (w + random(this.size / 4));
       } else {
-        //var cp1X =cos(radians(_i * tSpacing)) * (h+random(size));
-        //var cp1Y =sin(radians(_i * tSpacing)) * (w+random(size));
+        //var cp1X =cos(radians(_i * tSpacing)) * (h+random(this.size));
+        //var cp1Y =sin(radians(_i * tSpacing)) * (w+random(this.size));
         var cp1X = pX;
         var cp1Y = pY;
       }
 
       if (Math.random() >= 0.5) {
-        var cp2X = cos(radians(_i * tSpacing)) * (h + random(size / 4));
-        var cp2Y = cos(radians(_i * tSpacing)) * (h + random(size / 4));
+        var cp2X = cos(radians(_i * tSpacing)) * (h + random(this.size / 4));
+        var cp2Y = cos(radians(_i * tSpacing)) * (h + random(this.size / 4));
       } else {
-        //var cp1X =cos(radians(_i * tSpacing)) * (h+random(size));
-        //var cp1Y =sin(radians(_i * tSpacing)) * (w+random(size));
+        //var cp1X =cos(radians(_i * tSpacing)) * (h+random(this.size));
+        //var cp1Y =sin(radians(_i * tSpacing)) * (w+random(this.size));
         var cp2X = pX;
         var cp2Y = pY;
       }

@@ -11,18 +11,22 @@ function feat10(_a) {
   var numStyles=8;
 
   if (debug) {
+
     console.log("I pulled anchor " + rn);
     console.log("rect at " + this.origin.x + ", " + this.origin.y);
   }
 
   //revisit -- mke range proportional to grid
-  var size = random(xSpacer / 30, xSpacer / 3);
+this.size = random(sizeMin, sizeMax);
+  //var this.size = random(xSpacer / 30, xSpacer / 3);
 
   this.r1;
   this.r2;
 
   this.display = function() {
+    if(debug){
 console.log("display 10");
+}
 
     if (this.isRotated) {
       rotate(random(360));
@@ -37,8 +41,8 @@ else {
 }
 
 
-      this.h = random(size);
-      this.w = random(size);
+      this.h = random(this.size);
+      this.w = random(this.size);
 
       var tAngle;
 
@@ -49,7 +53,7 @@ else {
       tAngle=random(.1,.9);
     }
     //rect(0,0,10,10);
-    radioWaves(this.h, random(.01,.5), random(.01,.5), random(15),int(random(1,numStyles+1)), tAngle);
+    radioWaves(this.h, random(.01,.5), random(.01,.5), random(1,16),int(random(1,numStyles+1)), tAngle);
     //radioWaves(this.h, random(.01,.5), random(.01,.5), random(15),8, tAngle);
     //radioWaves(100,.1,.3,10);
 
@@ -71,8 +75,10 @@ function radioWaves(rad, res, len, ring, style, angle){
 var _radius = rad;
 var resolution=res;
 var lineLength = len;
+//console.log("radio wave line length: "+lineLength);
 var rings = ring;
-
+console.log("radio wave rad: "+_radius);
+console.log("radio wave rings: "+ring);
 
 
 //noStroke();
@@ -158,7 +164,7 @@ switch (style) {
       beginShape();
       vertex(x*j,y*j);
       if (Math.random() >= 0.25) {
-        //equal size lines
+        //equal this.size lines
       vertex(x*(j+lineLength),y*(j+lineLength));
     }
     else if (Math.random() >= 0.25) {
@@ -187,7 +193,7 @@ switch (style) {
             beginShape();
             vertex(x*j,y*j);
           if (Math.random() >= 0.25) {
-              //equal size lines
+              //equal this.size lines
             vertex(x*(j+lineLength),y*(j+lineLength));
           }
           else if (Math.random() >= 0.25) {
@@ -229,7 +235,7 @@ else {
                   vertex(x*j,y*j);
 
                 if (Math.random() >= 0.25) {
-                    //equal size lines
+                    //equal this.size lines
                   vertex(x*(j+lineLength),y*(j+lineLength));
                 }
 

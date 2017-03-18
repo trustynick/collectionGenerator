@@ -23,15 +23,18 @@ function feat8(_a) {
     console.log("rect at " + this.origin.x + ", " + this.origin.y);
   }
 
-  //revisit -- mke range proportional to grid
-  var size = random(xSpacer / 30, xSpacer / 3.5);
+
+  this.size = random(sizeMin, sizeMax/2);
+    //var size = random(xSpacer / 30, xSpacer / 3.5);
 
   this.r1;
   this.r2;
 
 
   this.display = function() {
+    if(debug){
 console.log("display 8");
+}
 
     if (this.isRotated) {
       rotate(random(360));
@@ -45,8 +48,8 @@ push();
 else {
   noFill();
 }
-      this.h = random(size);
-      this.w = random(size);
+      this.h = random(this.size);
+      this.w = random(this.size);
     //rect(0,0,10,10);
     star(0, 0, this.h, this.w, abs(int(random(-12,20))));
     //star(0, 0, 40, 41, abs(int(random(-12,20))));

@@ -22,12 +22,15 @@ function feat11(_a) {
   }
 
   //revisit -- mke range proportional to grid
-  var size = random(xSpacer / 30, xSpacer / 3);
+this.size = random(sizeMin, sizeMax);
+  //var size = random(xSpacer / 30, xSpacer / 3);
 
   this.r1;
   this.r2;
   this.display = function() {
-console.log("display 10");
+    if(debug){
+console.log("display 11");
+}
 
     if (this.isRotated) {
       rotate(random(360));
@@ -35,10 +38,10 @@ console.log("display 10");
 push();
     setColor();
     noStroke();
-      this.h = random(size);
-      this.w = random(size);
+      this.h = random(this.size);
+      this.w = random(this.size);
     //rect(this.h,0,10,10);
-    circBlob(this.h, random(2,7), .7);
+    circBlob(this.h, random(2,7), .7, this.origin);
 
 pop();
 
@@ -54,7 +57,7 @@ pop();
     this.anchors = new Anchors(c, tl, tr, bl, br);
   }
 
-  circBlob = function(rad, num, spread){
+  circBlob = function(rad, num, spread, origin){
     this.circCenters = [];
 
 
@@ -63,14 +66,42 @@ pop();
       var y =random(rad*spread*-1, rad*spread);
 
       this.circCenters.push(createVector(x, y));
+      tRad = random(rad);
 
-      ellipse(this.circCenters[i].x,this.circCenters[i].y, random(rad));
+      if(origin.x + this.circCenters.x+tRad>xSpacer*.9){
+        this.circCenters.x=xSpacer*.9-tRad;
+        console.log("moved it l");
+      }
+      if(origin.y + this.circCenters.y+tRad>ySpacer*.9){
+        this.circCenters.y=xSpacer*.9-tRad;
+        console.log("moved it d");
+      }
+      if(origin.x + this.circCenters.x+tRad<(xSpacer*-.9)){
+        this.circCenters.x=xSpacer*-.9+tRad;
+        console.log("moved it l");
+      }
+      if(origin.y + this.circCenters.y+tRad<(ySpacer*-.9)){
+        this.circCenters.y=ySpacer*-.9+tRad;
+        console.log("moved it u");
+      }
 
+      if(Math.random() >= 0.66){
+      ellipse(this.circCenters[i].x,this.circCenters[i].y, tRad);
+    }
+    else if(Math.random() >= 0.66){
+      if(Math.random() >= 0.5){
+        rectMode(CENTER);
+      }
+      rect(this.circCenters[i].x,this.circCenters[i].y, tRad/2,tRad/2);
+    }
+    else{
+      triangle(this.circCenters[i].x,this.circCenters[i].y,this.circCenters[i].x+random(-1*tRad,tRad),this.circCenters[i].y+random(-1*tRad,tRad),this.circCenters[i].x+random(-1*tRad,tRad),this.circCenters[i].y+random(-1*tRad,tRad));
+    }
 
 if(linked){
       if(i!=0){
       push();
-      //setColor();
+      setColor();
       strokeWeight(random(1,3));
       line(this.circCenters[i-1].x,this.circCenters[i-1].y,this.circCenters[i].x,this.circCenters[i].y);
       pop();

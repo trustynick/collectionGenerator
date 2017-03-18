@@ -14,21 +14,23 @@ function feat2(_a) {
   }
 
   //revisit -- mke range proportional to grid
-  var size = random(50, 100);
+  this.size = random(sizeMin, sizeMax);
   //revisit random range
   //var h = this.origin = _a.anchors[int(random(_a.anchors.length))] * random(-1.5, 1.5);
   //var w = this.origin = _a.anchors[int(random(_a.anchors.length))] * random(-1.5, 1.5);
-  var h = random(size);
-  var w = random(size);
+  var h = random(this.size/2);
+  var w = random(this.size/2);
 
 
   this.display = function() {
+    if(debug){
 console.log("display 2");
+}
     var reps = 1;
     var lengthOS = 0;
     if (this.repeats) {
       reps = int(random(6));
-      this.spacer = random(size / 10, size / 3);
+      this.spacer = random(this.size / 10, this.size / 3);
     }
 
     strokeWeight(random(5));
@@ -59,7 +61,7 @@ console.log("display 2");
 
       //does line length shift?
       if (Math.random() >= 0.5) {
-        lengthOS = (size * -1, size);
+        lengthOS = (this.size * -1, this.size);
       }
 
       //does line rotate?
